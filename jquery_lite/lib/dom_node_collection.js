@@ -96,6 +96,27 @@ class DOMNodeCollection{
       });
     });
   }
+
+  on(eventName, callback) {
+  this.each((node) => {
+    node.addEventListener(eventName, callback);
+    const eventKey = `jqliteEvents-${eventName}`;
+    if (typeof node[eventKey] === "undefined") {
+      node[eventKey] = [];
+    }
+    node[eventKey].push(callback);
+  });
+}
+
+  off(type) {
+    this.array.forEach( node => {
+      node.removeEventListener(type);
+    });
+  }
+
+
+
+
 }
 
 module.exports = DOMNodeCollection;
